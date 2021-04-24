@@ -12,7 +12,8 @@ class DrawerCustomHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 1000),
+      curve: Curves.easeOutQuint,
+      duration: Duration(milliseconds: 500),
       margin: EdgeInsets.symmetric(horizontal: margin),
       child: Column(
         children: [

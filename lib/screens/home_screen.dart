@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       duration: Duration(seconds: 1),
       curve: Curves.elasticOut,
     );
-    // setState(() => isDrawer = false);
+    setState(() => isDrawer = false);
   }
 
   @override
@@ -140,6 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) => _screens[index],
             ),
             AnimatedPositioned(
+              curve: Curves.elasticOut,
               duration: Duration(seconds: 1),
               left: !isDrawer ? -drawerWidth + 20 : 0.0,
               child: SizedBox(
@@ -221,6 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             AnimatedPositioned(
+              curve: Curves.elasticOut,
               duration: Duration(seconds: 1),
               bottom: 40.0,
               left: !isDrawer ? 0.0 : drawerWidth - 20,

@@ -24,9 +24,10 @@ class DrawerCustomButton extends StatelessWidget {
       onTap: onPressed,
       splashColor: Colors.red,
       child: AnimatedContainer(
+        curve: Curves.easeOutQuint,
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 5.0),
-        duration: Duration(milliseconds: 1000),
+        duration: Duration(milliseconds: 500),
         margin: EdgeInsets.symmetric(horizontal: margin, vertical: 5.0),
         decoration: BoxDecoration(
           color: color ?? null,
