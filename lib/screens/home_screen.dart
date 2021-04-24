@@ -1,6 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:transition_0001/widgets/drawer_header.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -68,6 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         painter: CustomDrawer(
                           offset: offset,
                         ),
+                      ),
+                      DrawerCustomHeader(
+                        margin: !isDrawer ? 20.0 : 0.0,
                       ),
                     ],
                   ),
