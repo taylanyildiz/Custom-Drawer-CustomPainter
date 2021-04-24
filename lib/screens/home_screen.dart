@@ -84,19 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _pageController = PageController(initialPage: 0);
   }
 
-  // Route _createRoute(Widget child) => PageRouteBuilder(
-  //       pageBuilder: (context, animation, secondaryAnimation) => child,
-  //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-  //         final offsetAnimation = animation.drive(
-  //             Tween(begin: Offset(-1.0, 0.0), end: Offset.zero)
-  //                 .chain(CurveTween(curve: Curves.elasticOut)));
-  //         return SlideTransition(
-  //           position: offsetAnimation,
-  //           child: child,
-  //         );
-  //       },
-  //     );
-
   getPosition(duration) {
     RenderBox renderBox = drawerKey.currentContext.findRenderObject();
     final position = renderBox.localToGlobal(Offset.zero);
