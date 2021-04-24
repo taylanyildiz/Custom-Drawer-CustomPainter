@@ -3,7 +3,7 @@ A new Flutter project.
 
 ## Screenshots
 
-<img src="ss1.png" height="300em" /><dvider/><img src="ss2.png" height="300em" /><br/><img src="ss3.png" height="300em" />
+<img src="ss1.png" height="300em" /><hr/><img src="ss2.png" height="300em" /><br/><img src="ss3.png" height="300em" />
 
 
 
