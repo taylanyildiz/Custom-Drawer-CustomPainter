@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:transition_0001/widgets/drawer_header.dart';
+import '../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -13,14 +13,116 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  PageController _pageController;
   bool isDrawer = false;
   Offset offset = Offset(0.0, 0.0);
+  GlobalKey drawerKey = GlobalKey();
+  final widgets = <double>[];
 
-  void nextPaga() {}
+  final _screens = <Widget>[
+    Scaffold(
+      backgroundColor: Colors.green,
+      body: Center(
+        child: Text(
+          'Page 1',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ),
+    Scaffold(
+      backgroundColor: Colors.orange,
+      body: Center(
+        child: Text(
+          'Page 2',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ),
+    Scaffold(
+      backgroundColor: Colors.red,
+      body: Center(
+        child: Text(
+          'Page 3',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ),
+    Scaffold(
+      backgroundColor: Colors.pink,
+      body: Center(
+        child: Text(
+          'Page 4',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ),
+  ];
 
   @override
   void initState() {
+    for (var i = 0; i < 5; i++) {
+      widgets.add(0.0);
+    }
+    WidgetsBinding.instance.addPostFrameCallback(getPosition);
     super.initState();
+    _pageController = PageController(initialPage: 0);
+  }
+
+  // Route _createRoute(Widget child) => PageRouteBuilder(
+  //       pageBuilder: (context, animation, secondaryAnimation) => child,
+  //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //         final offsetAnimation = animation.drive(
+  //             Tween(begin: Offset(-1.0, 0.0), end: Offset.zero)
+  //                 .chain(CurveTween(curve: Curves.elasticOut)));
+  //         return SlideTransition(
+  //           position: offsetAnimation,
+  //           child: child,
+  //         );
+  //       },
+  //     );
+
+  getPosition(duration) {
+    RenderBox renderBox = drawerKey.currentContext.findRenderObject();
+    final position = renderBox.localToGlobal(Offset.zero);
+    double start = position.dy - 20;
+    double constWidget = position.dy + renderBox.size.height - 20;
+    double step = (constWidget - start) / 4;
+    widgets.clear();
+    for (var i = start; i <= constWidget; i = i + step) {
+      widgets.add(i);
+    }
+  }
+
+  double getSize(int index) {
+    final size = offset.dy > widgets[index] && offset.dy < widgets[index + 1]
+        ? 25.0
+        : 20.0;
+    return size;
+  }
+
+  void drawerButton(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: Duration(seconds: 1),
+      curve: Curves.elasticOut,
+    );
+    // setState(() => isDrawer = false);
   }
 
   @override
@@ -32,18 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              color: Colors.red,
-              child: Center(
-                child: Text(
-                  'Page Drawer',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+            PageView.builder(
+              controller: _pageController,
+              itemCount: _screens.length,
+              itemBuilder: (context, index) => _screens[index],
             ),
             AnimatedPositioned(
               duration: Duration(seconds: 1),
@@ -69,8 +163,57 @@ class _HomeScreenState extends State<HomeScreen> {
                           offset: offset,
                         ),
                       ),
-                      DrawerCustomHeader(
-                        margin: !isDrawer ? 20.0 : 0.0,
+                      Container(
+                        child: Column(
+                          children: [
+                            DrawerCustomHeader(
+                              child: Container(
+                                height: 200.0,
+                                color: Colors.blue,
+                              ),
+                              margin: !isDrawer ? 20.0 : 0.0,
+                            ),
+                            Container(
+                              key: drawerKey,
+                              child: Column(
+                                children: [
+                                  DrawerCustomButton(
+                                    margin: !isDrawer ? 20.0 : 0.0,
+                                    onPressed: () => drawerButton(0),
+                                    icon: Icons.person,
+                                    title: 'Name',
+                                    trailingIcon: Icons.more_vert,
+                                    size: getSize(0),
+                                  ),
+                                  DrawerCustomButton(
+                                    margin: !isDrawer ? 20.0 : 0.0,
+                                    onPressed: () => drawerButton(1),
+                                    icon: Icons.image,
+                                    title: 'Select Image',
+                                    trailingIcon: Icons.more_vert,
+                                    size: getSize(1),
+                                  ),
+                                  DrawerCustomButton(
+                                    margin: !isDrawer ? 20.0 : 0.0,
+                                    onPressed: () => drawerButton(2),
+                                    icon: Icons.settings,
+                                    title: 'Setting profile',
+                                    trailingIcon: Icons.more_vert,
+                                    size: getSize(2),
+                                  ),
+                                  DrawerCustomButton(
+                                    margin: !isDrawer ? 20.0 : 0.0,
+                                    onPressed: () => drawerButton(3),
+                                    icon: Icons.connect_without_contact,
+                                    title: 'Connection',
+                                    trailingIcon: Icons.more_vert,
+                                    size: getSize(3),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
